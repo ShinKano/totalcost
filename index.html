@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+   <title>卒まで計算</title>
+<style>
+
+body {
+   padding: 30px;
+}
+
+input {
+   margin: 10px;
+   font-size: 20px;
+}
+
+label {
+   font-size: 20px;
+}
+
+button {
+   background: transparent;
+   border-radius: 3px;
+   border: 2px solid palevioletred;
+   color: palevioletred;
+   margin: 0 1em;
+   padding: 0.25em 1em;
+   font-size: 20px;
+}
+
+.dailyTotal::after, .totalCost::after{
+   content: ' PHP';
+}
+
+.dailyTotalJpy::after {
+   content: ' YEN';
+}
+
+.dayLeft::after {
+   content: ' days';
+}
+
+
+</style>
+</head>
+<body>
+   <h1>卒業までいくら？</h1>
+   <label for="taxi">taxi</label>
+   <input type="number" name="taxi" class="taxi"><br>
+   <label for="taxi">breakfast</label>
+   <input type="number" name="breakfast" class="breakfast"><br>
+   <label for="taxi">lunch</label>
+   <input type="number" name="lunch" class="lunch"><br>
+   <label for="taxi">oyatsu</label>
+   <input type="number" name="oyatsu" class="oyatsu"><br>
+   <label for="taxi">dinner</label>
+   <input type="number" name="dinner" class="dinner"><br>
+   <button onclick="culc()" >計算👧</button>
+
+   <h1>計算結果</h1>
+   <p>１日あたり（php）</p>
+   <div class="dailyTotal"></div>
+   <p>１日あたり（jpy）</p>
+   <div class="dailyTotalJpy"></div>
+   <p>残り日数</p>
+   <div class="dayLeft"></div>
+   <p>卒業までの合計費用</p>
+   <div class="totalCost"></div>
+   <div class="today"></div>
+   
+
+<script>
+
+let taxi      = 100;
+let breakfast = 50;
+let lunch     = 85;
+let oyatsu    = 50;
+let dinner    = 120;
+
+const today          = new Date();
+const graduationDate = new Date(2019,10,23);
+
+const year  = today.getFullYear();
+const month = today.getMonth() + 1;
+const day   = today.getDate();
+
+document.querySelector('.today').innerHTML = `<h3>ちなみに、今日は${year}年${month}月${day}日だよー🎅</h3>`;
+
+const inputTaxi      = document.querySelector('.taxi').value = taxi;
+const inputBreakfast = document.querySelector('.breakfast').value = breakfast;
+const inputLunch     = document.querySelector('.lunch').value = lunch;
+const inputOyatsu    = document.querySelector('.oyatsu').value = oyatsu;
+const inputDinner    = document.querySelector('.dinner').value = dinner;
+
+const culc = () => {
+   let taxi      = parseInt(document.querySelector('.taxi').value);
+   let breakfast = parseInt(document.querySelector('.breakfast').value);
+   let lunch     = parseInt(document.querySelector('.lunch').value);
+   let oyatsu    = parseInt(document.querySelector('.oyatsu').value);
+   let dinner    = parseInt(document.querySelector('.dinner').value);
+
+   const dailyTotal = taxi + breakfast + lunch + oyatsu + dinner;
+   const dailyTotalJpy = dailyTotal * 2;
+   const dayLeft  = ((graduationDate - today) / 1000 / 60 / 60 / 24);
+   const totalCost = dailyTotal * dayLeft;
+
+   document.querySelector('.dailyTotal').innerHTML    = dailyTotal;
+   document.querySelector('.dailyTotalJpy').innerHTML = dailyTotalJpy;
+   document.querySelector('.dayLeft').innerHTML       = Math.round(dayLeft);
+   document.querySelector('.totalCost').innerHTML     = Math.round(totalCost);
+};
+
+</script>
+
+</body>
+</html>
